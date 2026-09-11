@@ -5,3 +5,4 @@ artifacts/
 src/TodoApp.Web/data/todos.json
 graphify-out/
 .idea/
+referenes/
