@@ -1,0 +1,34 @@
+<article class="todo-card @(Todo.IsCompleted ? "completed" : string.Empty)" aria-labelledby="todo-@Todo.Id">
+    <div class="todo-card-header">
+        <h3 id="todo-@Todo.Id">@Todo.Title</h3>
+        <span class="completion-state">@(Todo.IsCompleted ? "Completed" : "Active")</span>
+    </div>
+    @if (!string.IsNullOrWhiteSpace(Todo.Description))
+    {
+        <p>@Todo.Description</p>
+    }
+    <dl class="todo-meta">
+        <div><dt>Priority</dt><dd>@Todo.Priority</dd></div>
+        <div><dt>Due</dt><dd>@(Todo.DueDate?.ToString("yyyy-MM-dd") ?? "No due date")</dd></div>
+        @if (Todo.Tags.Length > 0)
+        {
+            <div><dt>Tags</dt><dd>@string.Join(", ", Todo.Tags)</dd></div>
+        }
+    </dl>
+    <div class="todo-actions">
+        <button type="button" @onclick="ToggleCompletionAsync">@(Todo.IsCompleted ? "Reopen" : "Complete")</button>
+        <button type="button" @onclick="EditAsync">Edit</button>
+        <button type="button" class="danger" @onclick="DeleteAsync">Delete</button>
+    </div>
+</article>
+
+@code {
+    [Parameter, EditorRequired] public TodoItem Todo { get; set; } = null!;
+    [Parameter] public EventCallback<TodoItem> OnToggleCompletion { get; set; }
+    [Parameter] public EventCallback<TodoItem> OnEdit { get; set; }
+    [Parameter] public EventCallback<TodoItem> OnDelete { get; set; }
+
+    private Task ToggleCompletionAsync() => OnToggleCompletion.InvokeAsync(Todo);
+    private Task EditAsync() => OnEdit.InvokeAsync(Todo);
+    private Task DeleteAsync() => OnDelete.InvokeAsync(Todo);
+}

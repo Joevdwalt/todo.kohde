@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/TodoApp.Core.Tests/TodoApp.Core.Tests.csproj" />
+    <Project Path="src/TodoApp.Core/TodoApp.Core.csproj" />
+    <Project Path="src/TodoApp.Discovery.Tests/TodoApp.Discovery.Tests.csproj" />
+    <Project Path="src/TodoApp.Discovery/TodoApp.Discovery.csproj" />
+    <Project Path="src/TodoApp.Persistence.Json.IntegrationTests/TodoApp.Persistence.Json.IntegrationTests.csproj" />
+    <Project Path="src/TodoApp.Persistence.Json/TodoApp.Persistence.Json.csproj" />
+    <Project Path="src/TodoApp.Web.Tests/TodoApp.Web.Tests.csproj" />
+    <Project Path="src/TodoApp.Web/TodoApp.Web.csproj" />
+  </Folder>
+</Solution>

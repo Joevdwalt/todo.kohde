@@ -1,0 +1,110 @@
+@using System.ComponentModel.DataAnnotations
+
+<section class="todo-editor" aria-labelledby="@(IsEdit ? "edit-todo-heading" : "new-todo-heading")">
+    <h2 id="@(IsEdit ? "edit-todo-heading" : "new-todo-heading")">@(IsEdit ? "Edit todo" : "Add a todo")</h2>
+    <EditForm Model="Model" OnValidSubmit="SubmitAsync" FormName="@(IsEdit ? "edit-todo" : "new-todo")">
+        <DataAnnotationsValidator />
+        <ValidationSummary id="todo-editor-validation" />
+        <div class="form-field">
+            <label for="todo-title">Title</label>
+            <InputText id="todo-title" @bind-Value="Model.Title" aria-describedby="todo-title-help" />
+            <small id="todo-title-help">Required, up to 200 characters.</small>
+            <ValidationMessage For="@(() => Model.Title)" />
+        </div>
+        <div class="form-field">
+            <label for="todo-description">Description</label>
+            <InputTextArea id="todo-description" @bind-Value="Model.Description" rows="4" />
+            <ValidationMessage For="@(() => Model.Description)" />
+        </div>
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="todo-due-date">Due date</label>
+                <InputDate id="todo-due-date" @bind-Value="Model.DueDate" />
+            </div>
+            <div class="form-field">
+                <label for="todo-priority">Priority</label>
+                <InputSelect id="todo-priority" @bind-Value="Model.Priority">
+                    @foreach (var priority in Enum.GetValues<TodoPriority>())
+                    {
+                        <option value="@priority">@priority</option>
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="form-field">
+            <label for="todo-tags">Tags</label>
+            <InputText id="todo-tags" @bind-Value="Model.Tags" aria-describedby="todo-tags-help" />
+            <small id="todo-tags-help">Separate tags with commas.</small>
+        </div>
+        <div class="editor-actions">
+            <button type="submit" class="primary">@(IsEdit ? "Save changes" : "Add todo")</button>
+            @if (IsEdit)
+            {
+                <button type="button" @onclick="CancelAsync">Cancel</button>
+            }
+        </div>
+    </EditForm>
+</section>
+
+@code {
+    [Parameter] public TodoItem? Todo { get; set; }
+    [Parameter] public EventCallback<TodoDraft> OnSubmit { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private TodoEditorModel Model { get; set; } = new();
+    private (Guid Id, long Version)? loadedTodo;
+    private bool IsEdit => Todo is not null;
+
+    protected override void OnParametersSet()
+    {
+        if (Todo is null)
+        {
+            loadedTodo = null;
+            return;
+        }
+
+        if (loadedTodo is { } current && current == (Todo.Id, Todo.Version))
+        {
+            return;
+        }
+
+        Model = TodoEditorModel.From(Todo);
+        loadedTodo = (Todo.Id, Todo.Version);
+    }
+
+    private Task SubmitAsync() => OnSubmit.InvokeAsync(Model.ToDraft());
+
+    private Task CancelAsync() => OnCancel.InvokeAsync();
+
+    public sealed class TodoEditorModel
+    {
+        [Required(ErrorMessage = "A title is required.")]
+        [StringLength(200, ErrorMessage = "A title cannot exceed 200 characters.")]
+        public string Title { get; set; } = string.Empty;
+
+        [StringLength(2000, ErrorMessage = "A description cannot exceed 2,000 characters.")]
+        public string? Description { get; set; }
+
+        public DateOnly? DueDate { get; set; }
+
+        public TodoPriority Priority { get; set; }
+
+        public string? Tags { get; set; }
+
+        public TodoDraft ToDraft() => new(
+            Title,
+            Description,
+            DueDate,
+            Priority,
+            (Tags ?? string.Empty).Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries));
+
+        public static TodoEditorModel From(TodoItem todo) => new()
+        {
+            Title = todo.Title,
+            Description = todo.Description,
+            DueDate = todo.DueDate,
+            Priority = todo.Priority,
+            Tags = string.Join(", ", todo.Tags)
+        };
+    }
+}

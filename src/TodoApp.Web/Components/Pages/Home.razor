@@ -1,0 +1,56 @@
+@page "/"
+@inject TodoPageState Page
+
+<PageTitle>Todo list</PageTitle>
+
+<main class="todo-page">
+    <header class="page-header">
+        <div><p class="eyebrow">Personal workspace</p><h1>Todo list</h1><p class="intro">Capture work, keep it organized, and make progress one task at a time.</p></div>
+        <button type="button" class="primary add-button" @onclick="BeginCreate">Add todo</button>
+    </header>
+    <StatusMessage Message="@Page.Announcement" IsError="@(Page.Error is not null || Page.Status == TodoPageStatus.UnexpectedError)" ShowReload="@(Page.Status == TodoPageStatus.Conflict)" OnReload="ReloadAsync" />
+    @if (Page.IsLoading)
+    {
+        <p class="loading-state" role="status" aria-live="polite">Loading your todos…</p>
+    }
+    else if (Page.Status is TodoPageStatus.InvalidStorage or TodoPageStatus.StorageUnavailable or TodoPageStatus.UnexpectedError)
+    {
+        <section class="failure-state" role="alert"><h2>Todos are unavailable</h2><p>@TodoPageState.MessageFor(Page.Error)</p><button type="button" @onclick="ReloadAsync">Retry</button></section>
+    }
+    else
+    {
+        <TodoFilters Query="Page.Query" OnQueryChanged="ApplyQuery" />
+        @if (editingTodo is not null) { <TodoEditor Todo="editingTodo" OnSubmit="SaveEditAsync" OnCancel="CancelEdit" /> }
+        else if (showCreate) { <TodoEditor OnSubmit="CreateAsync" OnCancel="CancelCreate" /> }
+        @if (Page.IsEmpty)
+        {
+            <section class="empty-state-panel"><h2>Your list is empty</h2><p>Add your first todo to get started.</p><button type="button" class="primary" @onclick="BeginCreate">Add your first todo</button></section>
+        }
+        else if (Page.HasNoResults) { <p class="empty-state" role="status">No todos match your search or filters.</p> }
+        else
+        {
+            <TodoList Todos="Page.Todos" OnToggleCompletion="ToggleCompletionAsync" OnEdit="BeginEdit" OnDelete="BeginDelete" />
+        }
+    }
+</main>
+<DeleteTodoDialog Todo="deleteTodo" OnCancel="CancelDelete" OnConfirm="ConfirmDeleteAsync" />
+
+@code {
+    private TodoItem? editingTodo;
+    private TodoItem? deleteTodo;
+    private bool showCreate;
+
+    protected override async Task OnInitializedAsync() => await Page.LoadAsync();
+    private Task ApplyQuery(TodoQuery query) { Page.SetQuery(query); return Task.CompletedTask; }
+    private void BeginCreate() { editingTodo = null; showCreate = true; }
+    private void CancelCreate() => showCreate = false;
+    private void BeginEdit(TodoItem todo) { showCreate = false; editingTodo = todo; }
+    private void CancelEdit() => editingTodo = null;
+    private async Task CreateAsync(TodoDraft draft) { if ((await Page.CreateAsync(draft)).IsSuccess) showCreate = false; }
+    private async Task SaveEditAsync(TodoDraft draft) { if (editingTodo is not null && (await Page.UpdateAsync(editingTodo.Id, editingTodo.Version, draft)).IsSuccess) editingTodo = null; }
+    private Task ToggleCompletionAsync(TodoItem todo) => Page.SetCompletionAsync(todo.Id, todo.Version, !todo.IsCompleted);
+    private void BeginDelete(TodoItem todo) => deleteTodo = todo;
+    private void CancelDelete() => deleteTodo = null;
+    private async Task ConfirmDeleteAsync() { if (deleteTodo is not null && (await Page.DeleteAsync(deleteTodo.Id, deleteTodo.Version)).IsSuccess) deleteTodo = null; }
+    private Task ReloadAsync() => Page.ReloadAfterConflictAsync();
+}

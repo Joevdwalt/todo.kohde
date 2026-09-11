@@ -1,0 +1,104 @@
+<section class="filters" aria-labelledby="filters-heading">
+    <h2 id="filters-heading">Find todos</h2>
+    <div class="filter-grid">
+        <div class="form-field">
+            <label for="todo-view">View</label>
+            <select id="todo-view" value="@View" @onchange="ChangeView">
+                @foreach (var value in Enum.GetValues<TodoView>())
+                {
+                    <option value="@value">@Display(value)</option>
+                }
+            </select>
+        </div>
+        <div class="form-field search-field">
+            <label for="todo-search">Search</label>
+            <input id="todo-search" value="@SearchText" @oninput="ChangeSearch" placeholder="Title, description, or tag" />
+        </div>
+        <div class="form-field">
+            <label for="todo-status">Status</label>
+            <select id="todo-status" value="@Status" @onchange="ChangeStatus">
+                <option value="">Any status</option>
+                <option value="false">Active</option>
+                <option value="true">Completed</option>
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="todo-priority-filter">Priority</label>
+            <select id="todo-priority-filter" value="@Priority" @onchange="ChangePriority">
+                <option value="">Any priority</option>
+                @foreach (var value in Enum.GetValues<TodoPriority>())
+                {
+                    <option value="@value">@value</option>
+                }
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="todo-tag-filter">Tag</label>
+            <input id="todo-tag-filter" value="@Tag" @onchange="ChangeTag" />
+        </div>
+        <div class="form-field">
+            <label for="todo-due-filter">Due date</label>
+            <select id="todo-due-filter" value="@DueDateFilter" @onchange="ChangeDueDateFilter">
+                @foreach (var value in Enum.GetValues<TodoDueFilter>())
+                {
+                    <option value="@value">@Display(value)</option>
+                }
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="todo-sort">Sort by</label>
+            <select id="todo-sort" value="@SortField" @onchange="ChangeSortField">
+                @foreach (var value in Enum.GetValues<TodoSortField>())
+                {
+                    <option value="@value">@Display(value)</option>
+                }
+            </select>
+        </div>
+        <div class="form-field">
+            <label for="todo-sort-direction">Direction</label>
+            <select id="todo-sort-direction" value="@SortDirection" @onchange="ChangeSortDirection">
+                @foreach (var value in Enum.GetValues<SortDirection>())
+                {
+                    <option value="@value">@Display(value)</option>
+                }
+            </select>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter] public TodoQuery Query { get; set; } = new();
+    [Parameter] public EventCallback<TodoQuery> OnQueryChanged { get; set; }
+
+    private TodoView View => Query.View;
+    private string SearchText => Query.SearchText ?? string.Empty;
+    private string Status => Query.IsCompleted?.ToString().ToLowerInvariant() ?? string.Empty;
+    private string Priority => Query.Priority?.ToString() ?? string.Empty;
+    private string Tag => Query.Tag ?? string.Empty;
+    private TodoDueFilter DueDateFilter => Query.DueDateFilter;
+    private TodoSortField SortField => Query.SortField;
+    private SortDirection SortDirection => Query.SortDirection;
+
+    private Task ChangeView(ChangeEventArgs args) => Emit(Query with { View = Parse<TodoView>(args.Value, TodoView.All) });
+    private Task ChangeSearch(ChangeEventArgs args) => Emit(Query with { SearchText = args.Value?.ToString() });
+    private Task ChangeStatus(ChangeEventArgs args) => Emit(Query with { IsCompleted = ParseNullableBool(args.Value) });
+    private Task ChangePriority(ChangeEventArgs args) => Emit(Query with { Priority = ParseNullable<TodoPriority>(args.Value) });
+    private Task ChangeTag(ChangeEventArgs args) => Emit(Query with { Tag = args.Value?.ToString() });
+    private Task ChangeDueDateFilter(ChangeEventArgs args) => Emit(Query with { DueDateFilter = Parse(args.Value, TodoDueFilter.Any) });
+    private Task ChangeSortField(ChangeEventArgs args) => Emit(Query with { SortField = Parse(args.Value, TodoSortField.Default) });
+    private Task ChangeSortDirection(ChangeEventArgs args) => Emit(Query with { SortDirection = Parse(args.Value, SortDirection.Ascending) });
+
+    private Task Emit(TodoQuery query) => OnQueryChanged.InvokeAsync(query);
+
+    private static T Parse<T>(object? value, T fallback) where T : struct, Enum =>
+        Enum.TryParse(value?.ToString(), out T parsed) ? parsed : fallback;
+
+    private static T? ParseNullable<T>(object? value) where T : struct, Enum =>
+        string.IsNullOrWhiteSpace(value?.ToString()) ? null : Parse<T>(value, default);
+
+    private static bool? ParseNullableBool(object? value) =>
+        bool.TryParse(value?.ToString(), out var parsed) ? parsed : null;
+
+    private static string Display<T>(T value) =>
+        value?.ToString()?.Replace("DueToday", "Due today").Replace("NoDueDate", "No due date") ?? string.Empty;
+}

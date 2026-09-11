@@ -1,0 +1,23 @@
+@if (Todo is not null)
+{
+    <div class="dialog-backdrop" role="presentation">
+        <section class="delete-dialog" role="dialog" aria-modal="true" aria-labelledby="delete-heading">
+            <h2 id="delete-heading">Delete “@Todo.Title”?</h2>
+            <p>This permanently removes this todo. This action cannot be undone.</p>
+            <div class="dialog-actions">
+                <button type="button" @onclick="CancelAsync">Cancel</button>
+                <button type="button" class="danger" @onclick="ConfirmAsync">Delete todo</button>
+            </div>
+        </section>
+    </div>
+}
+
+@code {
+    [Parameter] public TodoItem? Todo { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+    [Parameter] public EventCallback OnConfirm { get; set; }
+
+    private Task CancelAsync() => OnCancel.InvokeAsync();
+
+    private Task ConfirmAsync() => OnConfirm.InvokeAsync();
+}

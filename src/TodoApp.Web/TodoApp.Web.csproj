@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\TodoApp.Core\TodoApp.Core.csproj" />
+    <ProjectReference Include="..\TodoApp.Discovery\TodoApp.Discovery.csproj" />
+    <ProjectReference Include="..\TodoApp.Persistence.Json\TodoApp.Persistence.Json.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <BlazorDisableThrowNavigationException>true</BlazorDisableThrowNavigationException>
+  </PropertyGroup>
+
+</Project>

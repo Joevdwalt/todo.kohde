@@ -1,0 +1,29 @@
+<section class="todo-list" aria-labelledby="todo-list-heading">
+    <div class="list-heading">
+        <h2 id="todo-list-heading">Todos</h2>
+        <span>@Todos.Count result@(Todos.Count == 1 ? string.Empty : "s")</span>
+    </div>
+    @if (Todos.Count == 0)
+    {
+        <p class="empty-state">No todos match the current view and filters.</p>
+    }
+    else
+    {
+        <div class="todo-cards">
+            @foreach (var todo in Todos)
+            {
+                <TodoCard Todo="todo"
+                          OnToggleCompletion="OnToggleCompletion"
+                          OnEdit="OnEdit"
+                          OnDelete="OnDelete" />
+            }
+        </div>
+    }
+</section>
+
+@code {
+    [Parameter] public IReadOnlyList<TodoItem> Todos { get; set; } = [];
+    [Parameter] public EventCallback<TodoItem> OnToggleCompletion { get; set; }
+    [Parameter] public EventCallback<TodoItem> OnEdit { get; set; }
+    [Parameter] public EventCallback<TodoItem> OnDelete { get; set; }
+}
