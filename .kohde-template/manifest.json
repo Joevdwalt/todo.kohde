@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "templateName": "kohde-ai-project-template",
+  "templateVersion": "0.5.0",
+  "profile": "dotnet",
+  "inputs": {
+    "projectName": "todo-app",
+    "projectSlug": "todo-app",
+    "projectDescription": "Demo project for building a todo app."
+  },
+  "managedFiles": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "1ded9c05a653ffb37ac3da103e3ce326c32885b5fb5d9d16bcdf864c281c42f1"
+    },
+    {
+      "path": "src/scripts/coverage.ps1",
+      "sha256": "fbe3fdd62f835b5c11af85405d0ab738626287761d3097e9197e43a7c8371b14"
+    },
+    {
+      "path": "src/scripts/build.ps1",
+      "sha256": "19647c2e007db8d91fa3804e61162936e4b9457d6953215e48be4d4332653a7e"
+    },
+    {
+      "path": "global.json",
+      "sha256": "4bcf8844d00418dc377a07a0d9c58ac85551be061c193179382768ea2da6d9cf"
+    },
+    {
+      "path": "docs/standards/KDOTNET0002-build-and-test-contract.md",
+      "sha256": "0f446e47f1852a605d03f022ff1ce98e68ac5ee3a82a330e1fb8df430bad870e"
+    },
+    {
+      "path": "docs/standards/KDOTNET0001-task-driven-automation.md",
+      "sha256": "93b6679dbd383f64c5e25cfd807adfff0e2daf5fb42750ca749ef498b7b2f0ce"
+    },
+    {
+      "path": "Directory.Packages.props",
+      "sha256": "b29f87f868d7180c63c434e04307ac6f577efd5165083609d68b4dab2f2a9d0a"
+    },
+    {
+      "path": "Directory.Build.props",
+      "sha256": "c3e7bc9ce96e8b5cc5e69195fdd8b78d19b1f2968034ff07b539153671367a6c"
+    },
+    {
+      "path": "TaskFile.yml",
+      "sha256": "cd65cba9b12808a0532dacac2f229b2b7931b1f998ac7d42514e0eeb675b412c"
+    },
+    {
+      "path": "START-HERE.md",
+      "sha256": "294f745ce76d4a8eac0bc8b82a8b5d963b31432a69fd08da477c3494f8884a73"
+    },
+    {
+      "path": "src/scripts/template-upgrade.ps1",
+      "sha256": "f1d48111e38d2f0ef6abdd54ffe1348205b2d0fcafdf6fa38f8ca0d6daf4c361"
+    },
+    {
+      "path": "README.md",
+      "sha256": "2e70da3af3563c3573db418c99698f467123b7d7bfb56ec7d800c1b2626df4f9"
+    },
+    {
+      "path": "docs/templates/SPEC.md",
+      "sha256": "2b563b539ab7fa26fd6412885dba2bf93c4572dd21887760289c059e313929f4"
+    },
+    {
+      "path": "docs/templates/RDR.md",
+      "sha256": "c9ca9cd8afb8855b9ade09ef1f4acc77538c6f07753131354b629d2bb9adeb24"
+    },
+    {
+      "path": "docs/templates/PROGRAM-DESIGN.md",
+      "sha256": "6c6a2c20112d86385b8a4017d451e46ba4268f3d2cbe4e1e7ec288edf7ccf250"
+    },
+    {
+      "path": "src/scripts/integration-test.ps1",
+      "sha256": "f7b2aef70be528f422e43119160e4ea8ef28377375719da297d68f18f9d1aca4"
+    },
+    {
+      "path": "docs/templates/PLAN.md",
+      "sha256": "3b6211d615cfc2c159729907cb4b62929c8ad31554a308e792faa96d18415457"
+    },
+    {
+      "path": "docs/templates/ADR.md",
+      "sha256": "3978281f1c4789cab63faed5457d2cdd525b5906a90d0001075f0707b9058003"
+    },
+    {
+      "path": "docs/standards/KSTD0007-safe-durable-state-changes.md",
+      "sha256": "96e108bc455c7bd51f0050dbee18aeb3b1003fc5bf36a56a09ab3bd83bb6d19d"
+    },
+    {
+      "path": "docs/standards/KSTD0006-application-source-structure.md",
+      "sha256": "bf7f2dff8e46293154cac287b7700ac15daa5b41ba46f191f1624489fa97c074"
+    },
+    {
+      "path": "docs/standards/KSTD0005-program-design.md",
+      "sha256": "0ce1c52a5a518e0c0a6b6446f40d84a558df3305f361dfc9ab442925c9d116c9"
+    },
+    {
+      "path": "docs/standards/KSTD0004-repository-workflow.md",
+      "sha256": "5a6984c7ba7dcdf3bfb3d45d7cc2e02bca4cfcb5609df2cf1ab5f89e0e210e72"
+    },
+    {
+      "path": "docs/standards/KSTD0003-boundaries-and-testability.md",
+      "sha256": "511874edb0f12de34d5231d96dba0473fbef50714e002e55b7437142a6e076f5"
+    },
+    {
+      "path": "docs/standards/KSTD0002-document-system.md",
+      "sha256": "0e1a54a5104ff1f95f3bb630352331f95a8761a938af89338460f4013529f831"
+    },
+    {
+      "path": "docs/standards/KSTD0001-ai-assisted-delivery-lifecycle.md",
+      "sha256": "2f232811289ef897f17f65eb2317c51b851dec0d4a6d07172a15c1e9a1a928c5"
+    },
+    {
+      "path": "docs/spec/README.md",
+      "sha256": "c639d97dd7c5e78680edfa3494f5ae2fabee7f73570e0f0565088b19fd0a2696"
+    },
+    {
+      "path": "docs/rdr/README.md",
+      "sha256": "35ebbfeb5dbe015f92dcd5797f80a3174d262e6b458d3a10380d1ce42d2aca5d"
+    },
+    {
+      "path": "docs/program-design/README.md",
+      "sha256": "d439b9aa7e245cef2a40152b4cac4de2b23f3c7a0b514a9b4ae1da1775b3543a"
+    },
+    {
+      "path": "docs/plans/README.md",
+      "sha256": "8fb64e6594cb32545dc87eaef119ec98aed05282bc770719baf36e02948b0693"
+    },
+    {
+      "path": "docs/guides/GUIDE0001-analysis-to-implementation.md",
+      "sha256": "c7a23ac1a69c9860502c51ef118393f3c2608a1102aca2cff237018e2ebba4ad"
+    },
+    {
+      "path": "docs/adr/README.md",
+      "sha256": "b57231f8d16b864d1f6e8d209aa6cd92cff6959ed05f245e4bd8a5d0008ea700"
+    },
+    {
+      "path": "docs/templates/GUIDE.md",
+      "sha256": "8f1e58885d8ebe59a1a59d2006e16b9ac18dfc6cbf3ea8d23b9f811493f5e57b"
+    },
+    {
+      "path": "src/scripts/test.ps1",
+      "sha256": "4720ed042564de2e4fab8dfacfb6099b7f63b24c4abbff7ba1d4d3a43302d48b"
+    }
+  ]
+}

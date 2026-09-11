@@ -1,0 +1,35 @@
+version: '3'
+
+tasks:
+  default:
+    desc: List available repository tasks
+    cmds:
+      - task --list
+    silent: true
+
+  build:
+    desc: Build all production application projects
+    cmds:
+      - pwsh -NoProfile -File src/scripts/build.ps1
+
+  template-upgrade:
+    desc: Upgrade this project from a Kohde template checkout
+    requires:
+      vars: [TEMPLATE]
+    cmds:
+      - pwsh -NoProfile -File src/scripts/template-upgrade.ps1 -TemplateRoot '{{.TEMPLATE}}' -Target '{{.TASKFILE_DIR}}'
+
+  test:
+    desc: Run deterministic unit tests and write TRX results
+    cmds:
+      - pwsh -NoProfile -File src/scripts/test.ps1
+
+  integration-test:
+    desc: Run opt-in integration tests and write TRX results
+    cmds:
+      - pwsh -NoProfile -File src/scripts/integration-test.ps1
+
+  coverage:
+    desc: Generate Cobertura, HTML, and text unit-test coverage reports
+    cmds:
+      - pwsh -NoProfile -File src/scripts/coverage.ps1
