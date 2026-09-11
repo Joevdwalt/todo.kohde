@@ -41,6 +41,9 @@ docs/templates/  Templates for new records
 
 Read [AGENTS.md](AGENTS.md) and the relevant standards, analysis items,
 specifications, and decisions before planning or changing the application.
+Multiple agents may work in this repository concurrently, so agents must read
+these files from the working tree at task start, re-check them when concurrent
+changes appear, and confirm them again before reporting completion.
 
 ## Template Upgrades
 

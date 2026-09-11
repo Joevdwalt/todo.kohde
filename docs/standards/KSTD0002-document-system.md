@@ -25,3 +25,15 @@ superseded by later records rather than silently rewritten.
 README.md is the source of truth for purpose and layout. START-HERE.md provides
 ordinary-language onboarding. AGENTS.md stays concise and refers agents to the
 README and applicable records.
+
+Repository documents are live coordination artifacts. Agents must read the
+current working-tree versions of `README.md`, `AGENTS.md`, and all records
+applicable to their task when work begins. An agent must not treat prompt
+content, chat history, a summary, or a previously read copy as authoritative
+when the repository version is available.
+
+Before editing a file and again before reporting completion, agents inspect the
+working tree for concurrent changes. If an applicable document changed after it
+was read, the agent re-reads it and reconciles its work with the latest accepted
+direction. Concurrent edits are preserved and must not be silently overwritten
+or reverted.

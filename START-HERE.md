@@ -4,17 +4,20 @@ Demo project for building a todo app.
 
 ## Before Implementation
 
-1. Identify the relevant approved product analysis.
-2. Confirm its intended outcome, acceptance criteria, constraints, and scope
+1. Read the current `README.md`, `AGENTS.md`, and applicable records directly
+   from the working tree.
+2. Identify the relevant approved product analysis.
+3. Confirm its intended outcome, acceptance criteria, constraints, and scope
    exclusions.
-3. Create or update durable specifications under `docs/spec/`.
-4. Create a construction-ready program design under `docs/program-design/`.
-5. Record consequential architecture or repository decisions under `docs/adr/`
+4. Create or update durable specifications under `docs/spec/`.
+5. Create a construction-ready program design under `docs/program-design/`.
+6. Record consequential architecture or repository decisions under `docs/adr/`
    or `docs/rdr/`.
-6. Accept the program design after its decisions and construction questions are
+7. Accept the program design after its decisions and construction questions are
    resolved.
-7. Create a decision-complete implementation plan under `docs/plans/`.
-8. Implement and verify the approved behavior.
+8. Create a decision-complete implementation plan under `docs/plans/`.
+9. Implement and verify the approved behavior, re-reading applicable records
+   whenever concurrent changes are detected and before completion.
 
 If analysis is missing, inaccessible, or contradictory, record the gap instead
 of inventing requirements.

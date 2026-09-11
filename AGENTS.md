@@ -24,6 +24,22 @@ Demo project for building a todo app.
 - Use an Accepted PROGRAM-DESIGN as the technical input to a feature PLAN.
 - Keep decision-complete AI-assisted plans in `docs/plans/`.
 
+## Documentation Freshness
+
+- Treat repository files as the current source of truth. Do not rely on copies
+  retained in prompts, chat history, summaries, or an earlier working context.
+- At the start of every task, read `README.md`, this file, and the applicable
+  specifications, program designs, plans, ADRs, RDRs, guides, and standards from
+  the working tree.
+- Immediately before changing a file, check the working tree and re-read that
+  file if another agent may have changed it since it was last inspected.
+- If relevant documentation changes while work is in progress, pause at the
+  next safe point, re-read the changed records, and reconcile the implementation
+  with the latest accepted direction before continuing.
+- Before reporting completion, re-read the applicable documentation, inspect
+  concurrent changes, and verify that the result still conforms. Never overwrite
+  or silently undo another agent's work.
+
 ## Working Conventions
 
 - Check applicable standards, specifications, ADRs, and RDRs before changing
