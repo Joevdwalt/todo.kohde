@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Accepted
 
 ## Analysis Inputs
 
@@ -49,7 +49,8 @@ todo store.
          "priority": "High",
          "tags": ["example"],
          "createdAt": "2026-09-11T10:00:00Z",
-         "updatedAt": "2026-09-11T10:00:00Z"
+         "updatedAt": "2026-09-11T10:00:00Z",
+         "version": 1
        }
      ]
    }
@@ -57,13 +58,17 @@ todo store.
 
 4. `dueDate` is either `null` or `YYYY-MM-DD`. Timestamps are ISO-8601 UTC
    values. Priorities use the names defined by SPEC0002.
-5. Duplicate todo identifiers, invalid field values, unexpected properties,
-   malformed JSON, and unsupported schema versions make the document invalid.
-   The application reports the problem, blocks mutations, and does not overwrite
-   the file.
+5. Required properties must be present. Identifiers must be non-empty and
+   unique; versions must be positive; timestamps must be UTC with creation not
+   later than last update; and titles, descriptions, priorities, and tags must
+   already satisfy SPEC0001 and SPEC0002 canonical rules. Duplicate tags,
+   unexpected properties, malformed JSON, and unsupported schema versions make
+   the document invalid. The application reports the problem, blocks mutations,
+   and does not overwrite the file.
 6. Reads load the current file. Each mutation acquires one application-wide
    asynchronous lock, re-reads and validates the current file, validates the
-   target and requested change, and only then persists the complete result.
+   target identity and expected version, validates the requested change, and
+   only then persists the complete result.
 7. A write creates a temporary file in the destination directory, writes and
    flushes the complete document, and atomically replaces the destination. If no
    destination exists, the completed temporary file is atomically moved into
@@ -74,6 +79,13 @@ todo store.
 9. One running application process owns writes. Concurrent requests inside that
    process are serialized; concurrent writers from other processes are
    unsupported.
+10. Successful writes canonically serialize the complete known document.
+    Existing todo array order is preserved, creates append, replacements remain
+    at their current index, and deletion removes only its target. Original JSON
+    whitespace and property ordering are not preserved.
+11. Expected failures use the categories `Validation`, `NotFound`, `Conflict`,
+    `InvalidStorage`, and `StorageUnavailable`; they are returned as outcomes
+    rather than represented as successful mutations.
 
 ## Acceptance
 

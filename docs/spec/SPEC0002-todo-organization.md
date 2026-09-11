@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Accepted
 
 ## Analysis Inputs
 
@@ -28,10 +28,13 @@ Define the optional metadata used to describe, schedule, and categorize todos.
 2. A todo may have one date-only due date. Due dates contain no time or timezone
    and are interpreted using the server's local calendar date.
 3. A todo has one priority: `None`, `Low`, `Medium`, or `High`. New todos default
-   to `None`.
+   to `None`. Their ascending rank is `None`, `Low`, `Medium`, then `High`.
 4. A todo may have multiple free-form tags. Each tag is trimmed, empty tags are
-   discarded, and duplicates are removed using case-insensitive comparison.
-   The casing of the first supplied occurrence is retained for display.
+   discarded, and duplicates are removed using ordinal case-insensitive
+   comparison. The casing of the first supplied occurrence is retained for
+   display. A todo may have at most 10 tags, each containing at most 40
+   characters. Commas separate tags in the web interface and are not part of a
+   tag value.
 5. An incomplete todo is overdue when its due date is earlier than the server's
    current local date. Completed todos are never overdue.
 6. Metadata changes follow SPEC0001 editing rules, including identity and

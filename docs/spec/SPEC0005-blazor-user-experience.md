@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Accepted
 
 ## Analysis Inputs
 
@@ -35,7 +35,8 @@ Define the observable web experience for the todo MVP.
    and delete actions.
 5. The interface provides distinct loading, empty-collection, no-search-results,
    persistence-error, and operation-failure states. Failures never appear as
-   successful changes.
+   successful changes. It distinguishes validation, not-found, conflict,
+   invalid-storage, and storage-unavailable outcomes.
 6. After every mutation, the initiating view reloads from persisted state before
    displaying success. This reduces stale updates across tabs but does not
    provide real-time cross-tab synchronization.
@@ -45,6 +46,10 @@ Define the observable web experience for the todo MVP.
 8. Core create, edit, discovery, completion, reopening, and deletion workflows
    remain usable at narrow mobile-sized browser widths without horizontal page
    scrolling.
+9. Edit, completion, reopening, and deletion submit the todo version currently
+   displayed. A conflict retains entered edit values, explains that the todo
+   changed, and offers an explicit reload. The application never automatically
+   resubmits a stale mutation.
 
 ## Acceptance
 

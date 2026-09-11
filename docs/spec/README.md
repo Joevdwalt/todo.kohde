@@ -13,4 +13,5 @@ next available `SPECNNNN` number.
 | [SPEC0004](SPEC0004-json-persistence.md) | Safe JSON persistence | SPEC0001, SPEC0002 |
 | [SPEC0005](SPEC0005-blazor-user-experience.md) | Blazor user experience | SPEC0001 through SPEC0004 |
 
-All MVP specifications remain Draft until reviewed and explicitly accepted.
+All MVP specifications are Accepted. Implementation must follow the accepted
+program designs and implementation plan that reference them.

@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Accepted
 
 ## Analysis Inputs
 
@@ -26,20 +26,26 @@ todo.
 ## Requirements
 
 1. A todo has an immutable GUID identifier, a title, a completion state, a UTC
-   creation timestamp, and a UTC last-updated timestamp.
+   creation timestamp, a UTC last-updated timestamp, and a positive integer
+   version used for optimistic concurrency.
 2. A title is required, is trimmed before validation and storage, and contains
    no more than 200 characters. A title containing only whitespace is invalid.
 3. Creating a todo generates its identifier and timestamps. The creation and
-   last-updated timestamps are equal at creation.
+   last-updated timestamps are equal at creation, and the version is `1`.
 4. Editing a todo may change its mutable content but never its identifier or
-   creation timestamp. A successful edit advances the last-updated timestamp.
-5. Completing an active todo and reopening a completed todo are explicit,
-   idempotent operations. A transition that changes state advances the
-   last-updated timestamp; repeating the current state does not.
+   creation timestamp. The request supplies the version last read. A successful
+   change increments the version and advances the last-updated timestamp to the
+   later of the current UTC time or one tick after its previous value.
+5. Completing an active todo and reopening a completed todo are explicit
+   operations that supply the version last read. After version validation, a
+   request for the current state succeeds without writing or changing the
+   version or timestamps. A state change increments the version and advances the
+   last-updated timestamp according to requirement 4.
 6. Deletion is permanent and requires explicit user confirmation. A cancelled
    confirmation does not issue a deletion operation.
-7. An operation targeting an unknown or stale todo fails without changing any
-   other todo.
+7. Edit, completion, reopening, and deletion reject a version that does not
+   equal the current stored version as a `Conflict`. An operation targeting an
+   unknown todo returns `NotFound`. Both outcomes leave every todo unchanged.
 
 ## Acceptance
 
@@ -50,6 +56,8 @@ todo.
   and last-updated time.
 - Complete and reopen operations result in the requested state and remain safe
   when repeated.
+- Current-version no-op transitions do not write; stale mutations report a
+  conflict without changing state.
 - Cancelling deletion preserves the todo; confirming deletion removes only the
   selected todo.
 - Lifecycle state remains correct after an application restart.

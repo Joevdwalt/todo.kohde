@@ -2,7 +2,7 @@
 
 ## Status
 
-Draft
+Accepted
 
 ## Analysis Inputs
 
@@ -28,11 +28,13 @@ Define the read-only ways a user can locate and prioritize todos.
 
 1. The application provides `All`, `Active`, `Completed`, `Due Today`, and
    `Overdue` views using the lifecycle and date rules in SPEC0001 and SPEC0002.
-2. Search performs case-insensitive substring matching across title,
+2. Search performs ordinal case-insensitive substring matching across title,
    description, and tags. Leading and trailing search whitespace is ignored.
 3. Users may filter by completion state, priority, tag, and due-date state.
+   Due-date filters are `Any`, `Due Today`, `Overdue`, and `No Due Date`.
    Multiple active filters combine using logical AND.
-4. Tag filtering uses case-insensitive exact matching against individual tags.
+4. Tag filtering uses ordinal case-insensitive exact matching against individual
+   tags.
 5. Users may sort by creation date, due date, priority, or title in ascending or
    descending direction.
 6. The default order places active todos before completed todos. Within each
@@ -40,8 +42,9 @@ Define the read-only ways a user can locate and prioritize todos.
    equal values use newest creation time first and then identifier for a stable
    tie-break.
 7. Explicit due-date sorting always places undated todos last in either
-   direction. Title sorting is case-insensitive and uses identifier as its final
-   tie-break.
+   direction. Priority sorting uses the rank in SPEC0002. Title sorting uses
+   ordinal case-insensitive comparison. Every explicit sort uses identifier
+   ascending as its final tie-break.
 8. Search, filtering, and sorting never mutate or persist todo data.
 
 ## Acceptance

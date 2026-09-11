@@ -33,3 +33,12 @@ tasks:
     desc: Generate Cobertura, HTML, and text unit-test coverage reports
     cmds:
       - pwsh -NoProfile -File src/scripts/coverage.ps1
+  agent:
+    desc: Create a Git worktree for a Codex agent
+    requires:
+      vars: [NAME]
+    cmds:
+      - git worktree add "../{{.ROOT}}-{{.NAME}}" -b "agent/{{.NAME}}"
+    vars:
+      ROOT:
+        sh: basename "$(git rev-parse --show-toplevel)"
