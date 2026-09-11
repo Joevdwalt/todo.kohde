@@ -9,13 +9,13 @@ Demo project for building a todo app.
 
 ## Analysis and Planning
 
-- Read the relevant Azure Boards Epic, Feature, and User Stories before writing
-  a specification or plan.
+- Read the relevant approved product analysis before writing a specification or
+  plan.
 - Preserve stated intent and acceptance criteria; do not invent missing product
   requirements.
 - Treat unavailable or contradictory analysis as an explicit planning gap.
-- Reference relevant work-item IDs in SPECs, PROGRAM-DESIGNs, and PLANs without
-  copying volatile backlog state.
+- Record the relevant analysis in SPECs, PROGRAM-DESIGNs, and PLANs. Link to
+  supporting records when useful, without depending on an external tracker.
 - Create feature-level, construction-ready PROGRAM-DESIGN records before
   implementation plans. Do not invent product behavior or leave construction
   decisions for the implementing agent.

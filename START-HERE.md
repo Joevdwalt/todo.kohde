@@ -4,8 +4,8 @@ Demo project for building a todo app.
 
 ## Before Implementation
 
-1. Identify the relevant Epic, Feature, and User Stories in Azure Boards.
-2. Confirm their intended outcome, acceptance criteria, constraints, and scope
+1. Identify the relevant approved product analysis.
+2. Confirm its intended outcome, acceptance criteria, constraints, and scope
    exclusions.
 3. Create or update durable specifications under `docs/spec/`.
 4. Create a construction-ready program design under `docs/program-design/`.

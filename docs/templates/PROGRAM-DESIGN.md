@@ -6,8 +6,9 @@ Proposed
 
 ## Design Inputs
 
-- Feature: `<Azure Boards ID or URL>`
-- User Stories: `<Azure Boards IDs or URLs>`
+- Capability:
+- Acceptance criteria:
+- Supporting analysis or references:
 - Specifications:
 - Applicable standards and prior decisions:
 - Assumptions:

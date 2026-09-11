@@ -6,9 +6,10 @@ Draft
 
 ## Analysis Inputs
 
-- Epic: `<Azure Boards ID or URL>`
-- Feature: `<Azure Boards ID or URL>`
-- User Stories: `<Azure Boards IDs or URLs>`
+- Product brief or outcome:
+- Capability:
+- Acceptance criteria:
+- Supporting analysis or references:
 - Stable outcome and acceptance summary:
 - Assumptions and unresolved questions:
 - Scope exclusions:
