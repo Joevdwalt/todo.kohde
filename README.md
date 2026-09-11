@@ -1,6 +1,8 @@
-# todo-app
+# Todo App
 
-Demo project for building a todo app.
+A single-user .NET 10 web application for managing a personal todo list. The
+application uses an ASP.NET Core Blazor Web App with Interactive Server rendering
+and stores todos in a local JSON file.
 
 **New to the repository? Start with [START-HERE.md](START-HERE.md).**
 
@@ -22,6 +24,22 @@ Epic -> Feature -> User Story -> SPEC -> PROGRAM-DESIGN -> ADR/RDR -> PLAN -> im
 
 Repository documents may link to supporting product records when useful, but
 they retain the durable analysis needed to understand and implement the work.
+
+## MVP Features
+
+- Create, view, edit, complete, reopen, and permanently delete todos.
+- Add descriptions, date-only due dates, priorities, and tags.
+- Find todos through status views, search, filters, and deterministic sorting.
+- Persist todos safely in a configurable, versioned JSON file.
+- Use a responsive and accessible Blazor interface with clear validation and
+  failure states.
+
+The first release is for one local user and one running application process. It
+does not include authentication, cloud synchronization, shared-file writers,
+recurring tasks, subtasks, reminders, notifications, attachments, trash,
+archive, import/export, change history, or an external HTTP API.
+
+Detailed behavior is defined in the [functional specifications](docs/spec/README.md).
 
 ## Structure
 
